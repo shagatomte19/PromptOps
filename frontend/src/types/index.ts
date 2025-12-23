@@ -178,7 +178,7 @@ export interface ActivityLog {
     action: string;
     message: string;
     source: string;
-    metadata: Record<string, unknown> | null;
+    extra_data: Record<string, unknown> | null;
     timestamp: string;
 }
 

@@ -21,7 +21,7 @@ class ActivityService:
         message: str,
         level: ActivityLevel = ActivityLevel.INFO,
         source: str = "system",
-        metadata: Optional[dict] = None
+        extra_data: Optional[dict] = None
     ) -> ActivityLog:
         """Create a new activity log entry."""
         log_entry = ActivityLog(
@@ -30,7 +30,7 @@ class ActivityService:
             message=message,
             level=level,
             source=source,
-            metadata=metadata or {}
+            extra_data=extra_data or {}
         )
         
         self.db.add(log_entry)
@@ -47,7 +47,7 @@ class ActivityService:
             message=f"Created prompt '{prompt_name}'",
             level=ActivityLevel.SUCCESS,
             source="api",
-            metadata={"prompt_id": prompt_id, "prompt_name": prompt_name}
+            extra_data={"prompt_id": prompt_id, "prompt_name": prompt_name}
         )
     
     async def log_version_created(self, user_id: str, prompt_name: str, version_tag: str, version_id: int):
@@ -58,7 +58,7 @@ class ActivityService:
             message=f"Created version {version_tag} for '{prompt_name}'",
             level=ActivityLevel.SUCCESS,
             source="api",
-            metadata={"version_id": version_id, "version_tag": version_tag}
+            extra_data={"version_id": version_id, "version_tag": version_tag}
         )
     
     async def log_deployment(self, user_id: str, prompt_name: str, version_tag: str, environment: str, deployment_id: int):
@@ -69,7 +69,7 @@ class ActivityService:
             message=f"Deployed {prompt_name} {version_tag} to {environment}",
             level=ActivityLevel.SUCCESS,
             source="api",
-            metadata={"deployment_id": deployment_id, "environment": environment}
+            extra_data={"deployment_id": deployment_id, "environment": environment}
         )
     
     async def log_rollback(self, user_id: str, prompt_name: str, from_version: str, to_version: str, environment: str):
@@ -80,7 +80,7 @@ class ActivityService:
             message=f"Rolled back {prompt_name} from {from_version} to {to_version} in {environment}",
             level=ActivityLevel.WARNING,
             source="api",
-            metadata={"from_version": from_version, "to_version": to_version, "environment": environment}
+            extra_data={"from_version": from_version, "to_version": to_version, "environment": environment}
         )
     
     async def log_inference(self, user_id: str, model: str, latency_ms: int, success: bool):
@@ -94,5 +94,6 @@ class ActivityService:
             message=message,
             level=level,
             source="api",
-            metadata={"model": model, "latency_ms": latency_ms, "success": success}
+            extra_data={"model": model, "latency_ms": latency_ms, "success": success}
         )
+

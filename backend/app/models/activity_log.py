@@ -40,7 +40,7 @@ class ActivityLog(Base):
     source: Mapped[str] = mapped_column(String(50), default="system")  # e.g., "system", "api", "ui"
     
     # Additional context
-    metadata: Mapped[Optional[dict]] = mapped_column(JSON, nullable=True)  # Extra data (prompt_id, version_id, etc.)
+    extra_data: Mapped[Optional[dict]] = mapped_column(JSON, nullable=True)  # Extra data (prompt_id, version_id, etc.)
     
     # Timestamp
     timestamp: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), index=True)

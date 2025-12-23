@@ -24,6 +24,7 @@ const ToastItem: React.FC<{ toast: Toast }> = ({ toast }) => {
 
     return (
         <motion.div
+            layout
             initial={{ opacity: 0, x: 100, scale: 0.95 }}
             animate={{ opacity: 1, x: 0, scale: 1 }}
             exit={{ opacity: 0, x: 100, scale: 0.95 }}
@@ -49,7 +50,7 @@ export const ToastContainer: React.FC = () => {
 
     return (
         <div className="fixed bottom-4 right-4 z-50 flex flex-col gap-2">
-            <AnimatePresence mode="popLayout">
+            <AnimatePresence>
                 {toasts.map((toast) => (
                     <ToastItem key={toast.id} toast={toast} />
                 ))}
@@ -59,3 +60,4 @@ export const ToastContainer: React.FC = () => {
 };
 
 export default ToastContainer;
+

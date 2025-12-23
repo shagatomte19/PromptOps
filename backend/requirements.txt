@@ -1,32 +1,28 @@
+# PromptOps Cloud - Backend Dependencies
+
 # FastAPI Framework
-fastapi==0.109.0
-uvicorn[standard]==0.27.0
+fastapi>=0.109.0
+uvicorn[standard]>=0.27.0
 
 # Database
-sqlalchemy==2.0.25
-asyncpg==0.29.0
-alembic==1.13.1
+sqlalchemy[asyncio]>=2.0.25
+asyncpg>=0.29.0
+alembic>=1.13.1
 
-# Supabase
-supabase==2.3.4
+# Supabase (includes httpx as dependency)
+supabase>=2.3.0
 
 # Validation & Serialization
-pydantic==2.5.3
-pydantic-settings==2.1.0
-python-multipart==0.0.6
+pydantic>=2.5.0
+pydantic-settings>=2.1.0
+python-multipart>=0.0.6
 
 # Authentication
-python-jose[cryptography]==3.3.0
-passlib[bcrypt]==1.7.4
-
-# HTTP Client
-httpx==0.26.0
+python-jose[cryptography]>=3.3.0
+passlib[bcrypt]>=1.7.4
 
 # AI Integration
-google-generativeai==0.8.3
+google-generativeai>=0.8.0
 
 # Utilities
-python-dotenv==1.0.0
-
-# CORS
-starlette==0.35.1
+python-dotenv>=1.0.0

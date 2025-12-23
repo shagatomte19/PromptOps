@@ -13,6 +13,11 @@ import type {
     ActivityLog,
 } from '@/types';
 
+// Re-export services from separate files
+export { default as promptsService } from './prompts';
+export { default as inferenceService } from './inference';
+export { supabase } from './supabase';
+
 // ====== Environments ======
 
 export const environmentsService = {

@@ -17,7 +17,7 @@ class ActivityLogResponse(BaseModel):
     action: str
     message: str
     source: str
-    metadata: Optional[dict]
+    extra_data: Optional[dict]
     timestamp: datetime
     
     class Config:
