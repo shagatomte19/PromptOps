@@ -60,7 +60,7 @@ promptops/
 ### 1. Clone & Setup
 
 ```bash
-git clone https://github.com/yourusername/promptops.git
+git clone https://github.com/shagatomte19/promptops.git
 cd promptops
 ```
 
