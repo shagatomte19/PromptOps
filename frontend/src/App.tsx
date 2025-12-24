@@ -7,6 +7,7 @@ import { ToastContainer } from '@/components/ui/Toast';
 import { LoginPage } from '@/pages/LoginPage';
 import { RegisterPage } from '@/pages/RegisterPage';
 import { AuthCallback } from '@/pages/AuthCallback';
+import { LandingPage } from '@/pages/LandingPage';
 
 // Dashboard
 import { DashboardLayout } from '@/components/dashboard/DashboardLayout';
@@ -14,6 +15,8 @@ import { OverviewView } from '@/components/dashboard/OverviewView';
 import { PromptEditor } from '@/components/dashboard/PromptEditor';
 import { MonitorView } from '@/components/dashboard/MonitorView';
 import { DeploymentsView } from '@/components/dashboard/DeploymentsView';
+import { ExperimentsView } from '@/components/dashboard/ExperimentsView';
+import { SettingsPage } from '@/components/dashboard/SettingsPage';
 
 /**
  * Protected route wrapper - redirects to login if not authenticated.
@@ -63,7 +66,10 @@ const PublicRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 const AppRoutes: React.FC = () => {
     return (
         <Routes>
-            {/* Public routes */}
+            {/* Landing page - public but redirects to dashboard if authenticated */}
+            <Route path="/" element={<PublicRoute><LandingPage /></PublicRoute>} />
+            
+            {/* Auth routes */}
             <Route path="/login" element={<PublicRoute><LoginPage /></PublicRoute>} />
             <Route path="/register" element={<PublicRoute><RegisterPage /></PublicRoute>} />
             <Route path="/auth/callback" element={<AuthCallback />} />
@@ -81,14 +87,13 @@ const AppRoutes: React.FC = () => {
                 <Route path="editor" element={<PromptEditor />} />
                 <Route path="monitor" element={<MonitorView />} />
                 <Route path="deployments" element={<DeploymentsView />} />
-                <Route path="experiments" element={<div className="p-6 text-gray-500">Experiments - Coming Soon</div>} />
-                <Route path="settings" element={<div className="p-6 text-gray-500">Settings - Coming Soon</div>} />
+                <Route path="experiments" element={<ExperimentsView />} />
+                <Route path="settings" element={<SettingsPage />} />
                 <Route path="*" element={<Navigate to="/dashboard" replace />} />
             </Route>
 
-            {/* Default redirect */}
-            <Route path="/" element={<Navigate to="/dashboard" replace />} />
-            <Route path="*" element={<Navigate to="/dashboard" replace />} />
+            {/* Catch-all redirect */}
+            <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
     );
 };

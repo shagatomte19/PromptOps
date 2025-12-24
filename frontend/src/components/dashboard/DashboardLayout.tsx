@@ -14,13 +14,14 @@ import {
     Activity,
     PanelBottomClose,
     PanelBottomOpen,
-    HelpCircle,
     FlaskConical
 } from 'lucide-react';
 import { cn } from '@/utils/cn';
 import { useAuth } from '@/contexts/AuthContext';
 import { useWorkspaceStore, useLogs, useActiveEnvironment, useIsLoading } from '@/stores/workspaceStore';
 import { LoadingBar } from '@/components/ui/Loading';
+import { CommandPalette } from '@/components/dashboard/CommandPalette';
+import { StatusBar } from '@/components/dashboard/StatusBar';
 
 interface SidebarItemProps {
     icon: React.ElementType;
@@ -112,6 +113,7 @@ export const DashboardLayout: React.FC = () => {
     const isLoading = useIsLoading();
 
     const [isTerminalOpen, setIsTerminalOpen] = useState(true);
+    const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
 
     // Fetch initial data
     useEffect(() => {
@@ -119,6 +121,24 @@ export const DashboardLayout: React.FC = () => {
         fetchEnvironments();
         fetchLogs();
     }, [fetchPrompts, fetchEnvironments, fetchLogs]);
+
+    // Global keyboard shortcuts
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            // Ctrl+K or Cmd+K for command palette
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                setIsCommandPaletteOpen(true);
+            }
+            // Escape to close command palette
+            if (e.key === 'Escape') {
+                setIsCommandPaletteOpen(false);
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, []);
 
     const handleSignOut = async () => {
         await signOut();
@@ -238,7 +258,16 @@ export const DashboardLayout: React.FC = () => {
 
                 {/* Bottom Terminal Panel */}
                 <TerminalPanel isOpen={isTerminalOpen} toggle={() => setIsTerminalOpen(!isTerminalOpen)} />
+
+                {/* Status Bar */}
+                <StatusBar />
             </div>
+
+            {/* Command Palette */}
+            <CommandPalette 
+                isOpen={isCommandPaletteOpen} 
+                onClose={() => setIsCommandPaletteOpen(false)} 
+            />
         </div>
     );
 };
